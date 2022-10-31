@@ -42,35 +42,139 @@
 </template>
 
 <script>
-import { defineComponent, ref, computed } from "vue";
+import { defineComponent, ref, computed, onMounted } from "vue";
+import { api } from "boot/axios";
 
 export default defineComponent({
   name: "IndexPage",
   setup() {
-    var lefttop = ref([false]);
-    var leftbelow = ref([false]);
-    var righttop = ref([false]);
-    var rightbelow = ref([false]);
+    var lefttop = ref(false);
+    var leftbelow = ref(false);
+    var righttop = ref(false);
+    var rightbelow = ref(false);
     function ccblt(e, go) {
       leftbelow.value = false;
       righttop.value = false;
       rightbelow.value = false;
+      console.log(lefttop.value);
+      if (lefttop.value == true) {
+        api
+          .post("/videoreq", { where: "lt" })
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch(() => {
+            console.log("Error exists");
+          });
+      } else {
+        api
+          .post("/videoreq", { where: "None" })
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch(() => {
+            console.log("Error exists");
+          });
+      }
     }
     function ccblb(e, go) {
       lefttop.value = false;
       righttop.value = false;
       rightbelow.value = false;
+      if (leftbelow.value) {
+        api
+          .post("/videoreq", { where: "lb" })
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch(() => {
+            console.log("Error exists");
+          });
+      } else {
+        api
+          .post("/videoreq", { where: "None" })
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch(() => {
+            console.log("Error exists");
+          });
+      }
     }
     function ccbrt(e, go) {
       lefttop.value = false;
       leftbelow.value = false;
       rightbelow.value = false;
+      if (righttop.value) {
+        api
+          .post("/videoreq", { where: "rt" })
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch(() => {
+            console.log("Error exists");
+          });
+      } else {
+        api
+          .post("/videoreq", { where: "None" })
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch(() => {
+            console.log("Error exists");
+          });
+      }
     }
     function ccbrb(e, go) {
       lefttop.value = false;
       leftbelow.value = false;
       righttop.value = false;
+      if (rightbelow.value) {
+        api
+          .post("/videoreq", { where: "rb" })
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch(() => {
+            console.log("Error exists");
+          });
+      } else {
+        api
+          .post("/videoreq", { where: "None" })
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch(() => {
+            console.log("Error exists");
+          });
+      }
     }
+    onMounted(() => {
+      api
+        .get("/videoreq/now")
+        .then((response) => {
+          //console.log(response.data);
+          var ret = response.data;
+
+          if (ret == "None") {
+            lefttop.value = false;
+            leftbelow.value = false;
+            righttop.value = false;
+            rightbelow.value = false;
+          } else if (ret == "lt") {
+            lefttop.value = true;
+          } else if (ret == "lb") {
+            leftbelow.value = true;
+          } else if (ret == "rt") {
+            righttop.value = true;
+          } else if (ret == "rb") {
+            rightbelow.value = true;
+          }
+        })
+        .catch(() => {
+          console.log("Error exists");
+        });
+    });
     return {
       ccblt,
       ccblb,

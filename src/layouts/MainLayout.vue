@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <q-header class="bg-green-4">
       <!--<q-toolbar>
         <q-btn
           flat
@@ -15,6 +15,12 @@
 
         <div>Quasar v{{ $q.version }}</div>
       </q-toolbar>-->
+      <q-tabs>
+        <q-route-tab label="Select" to="/" exact />
+        <q-route-tab label="Video" to="/SelectVideo" exact />
+        <q-route-tab label="Intro" to="/VideoShow" exact />
+        <q-route-tab label="Add" to="/VideoShow2" exact />
+      </q-tabs>
     </q-header>
 
     <!--<q-drawer
